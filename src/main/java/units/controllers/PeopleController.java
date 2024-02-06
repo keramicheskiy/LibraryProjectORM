@@ -14,11 +14,11 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/people")
-public class PersonController {
+public class PeopleController {
     private final PersonDao personDao;
 
     @Autowired
-    public PersonController(PersonDao personDao) {
+    public PeopleController(PersonDao personDao) {
         this.personDao = personDao;
     }
 
@@ -27,6 +27,18 @@ public class PersonController {
 //        model.addAttribute("people", personDao.index());
         model.addAttribute("people", List.of(new Person("joe", 122), new Person("biden", 39)));
         return "/people/index";
+    }
+
+    @GetMapping("/new")
+    public String createNewPerson(Model model) {
+        model.addAttribute("person", new Person());
+        return "/people/new";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editPerson(@ModelAttribute("id") int id, Model model) {
+        model.addAttribute("person", personDao.get(id));
+        return "/person/edit";
     }
 
 }
