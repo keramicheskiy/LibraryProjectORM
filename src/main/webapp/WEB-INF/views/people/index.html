@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>people indexation</title>
+</head>
+<body>
+    <div th:each="person : ${people}" >
+        <p th:text="${person.getName()} + ', ' + ${person.getAge()}">Name </p>
+    </div>
+
+    <script th:inline="javascript">
+        // Получаем данные из модели и передаем их в JavaScript
+        var personList = /*[[${people}]]*/ [];
+        console.log(personList);
+        personList.forEach(x => document.writeln(x));
+
+
+
+    </script>
+
+
+</body>
+</html>

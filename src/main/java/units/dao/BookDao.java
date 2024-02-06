@@ -12,68 +12,60 @@ import units.models.Person;
 import java.util.List;
 
 @Component
-public class PersonDao {
+public class BookDao {
     private final SessionFactory sessionFactory;
 
     @Autowired
-    public PersonDao(SessionFactory sessionFactory) {
+    public BookDao(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     @Transactional(readOnly = true)
-    public List<Person> index() {
+    public List<Book> index() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("select p from Person p", Person.class).getResultList();
+        return session.createQuery("select b from Book b", Book.class).getResultList();
     }
 
     @Transactional(readOnly = true)
-    public Person get(int id) {
+    public Book get(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Person.class, id);
+        return session.get(Book.class, id);
     }
 
     @Transactional(readOnly = true)
-    public List<Book> getBooks(int id) {
+    public Person getPerson(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Person person = session.load(Person.class, id);
-        return person.getBooks();
+        Book book = session.load(Book.class, id);
+        return book.getPerson();
     }
 
     @Transactional
-    public void save(Person person) {
+    public void save(Book book) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(person);
+        session.save(book);
     }
 
     @Transactional
-    public void update(int id, Person person) {
-        person.setId(id);
+    public void update(int id, Book book) {
+        book.setId(id);
         Session session = sessionFactory.getCurrentSession();
-        session.update(person);
+        session.update(book);
     }
 
     @Transactional
     public void delete(int id) {
         Session session = sessionFactory.getCurrentSession();
-        session.delete(session.load(Person.class, id));
+        session.delete(session.load(Book.class, id));
     }
 
     @Transactional
-    public void addBook(int personId, Book book) {
+    public void changePerson(int bookId, Person person) {
         Session session = sessionFactory.getCurrentSession();
-        Person person = session.load(Person.class, personId);
-        List<Book> books = person.getBooks();
-        books.add(book);
-        person.setBooks(books);
+        Book book = session.load(Book.class, bookId);
+        book.setPerson(person);
     }
 
 
 
 }
-
-
-
-
-
-
 
