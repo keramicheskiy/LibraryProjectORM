@@ -13,7 +13,20 @@
         // Получаем данные из модели и передаем их в JavaScript
         var personList = /*[[${people}]]*/ [];
         console.log(personList);
-        personList.forEach(x => document.writeln(x));
+        personList.forEach(function (person) {
+            var text = person.name + ', ' + person.age + '';
+            // document.writeln(text);
+
+            // var text = document.createTextNode(person.name + ' - ' + person.age + ' лет');
+
+            // Создаем элемент <p> и добавляем в него текст
+            var paragraph = document.createElement('p');
+            paragraph.textContent = text;
+
+            // Добавляем элемент <p> в контейнер
+            document.append(paragraph);
+            }
+        );
 
 
 
